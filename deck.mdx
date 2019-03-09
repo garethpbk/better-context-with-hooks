@@ -1,0 +1,133 @@
+export { future as theme } from 'mdx-deck/themes';
+import { Appear } from 'mdx-deck';
+
+## Better Context with React Hooks
+
+<br />
+<br />
+<br />
+<br />
+
+#### Gareth Kloeden
+
+##### March 13, 2019
+
+---
+
+## What is Context?
+
+<ul style={{ textAlign: 'left' }}>
+  <Appear>
+    <li style={{ margin: '25px 0' }}>Pass data through the component tree without prop drilling</li>
+    <li style={{ margin: '25px 0' }}>Share values between components without a direct parent - child relationship</li>
+    <li style={{ margin: '25px 0' }}>
+      API: <strong>Provider</strong> and <strong>Consumer</strong> components
+    </li>
+    <li style={{ margin: '25px 0' }}>Officially released in February 2018 with React 16.3</li>
+  </Appear>
+</ul>
+
+---
+
+<img src="./assets/prop-drilling-diagram.svg" />
+
+---
+
+<img src="./assets/context-diagram.svg" />
+
+---
+
+## Context API - Creation & Provider
+
+```jsx
+export const MyContext = React.createContext();
+
+class Parent extends React.Component {
+  // constructor goes here
+  state = {
+    name: 'Fido',
+    hasBall: false,
+  };
+
+  fetch() {
+    this.setState({ hasBall: !this.state.hasBall });
+  }
+
+  render() {
+    const values = { name: this.state.name, hasBall: this.state.hasBall, fetch: this.fetch };
+
+    return (
+      <MyContext.Provider value={values}>
+        <ChildOne />
+      </MyContext.Provider>
+    );
+  }
+}
+```
+
+---
+
+## ChildOne Component
+
+```jsx
+import ChildTwo from './ChildTwo';
+
+const ChildOne = () => (
+  <div style={{ backgroundColor: 'steelblue', padding: '25px', width: '50vw' }}>
+    <ChildTwo />
+  </div>
+);
+```
+
+No props passed to ChildTwo
+
+---
+
+## ChildTwo Component
+
+```jsx
+import { MyContext } from './Parent';
+
+const ChildTwo = () => (
+  <MyContext.Consumer>
+    {value => (
+      <div>
+        <h3>
+          {value.name} {value.hasBall ? 'has' : 'does not have'} the ball.
+        </h3>
+        <button onClick={() => value.fetch()}>Play Fetch</button>
+      </div>
+    )}
+  </MyContext.Consumer>
+);
+```
+
+Render prop to get values from context Provider
+
+---
+
+import Parent from './components/Parent';
+import ExampleKey from './components/ExampleKey';
+
+<Parent />
+
+---
+
+## Sidenote: Context vs Redux
+
+<Appear>
+  <h3>Does context replace the need for Redux?</h3>
+  <h1>
+    <em>MAYBE</em>
+  </h1>
+  <p>Redux changes the structure of your app, context doesn't really, both increase complexity</p>
+  <p>Redux is more than just global store - Flux architecture, immutability, pure functions, etc</p>
+  <p>Redux dev tools are really really good; debugging context with React dev tools is a pain</p>
+  <p><strong>If you just need to make state easily available, context is a good solution</strong></p>
+  <p>Same for MobX, Cerebral, Apollo Link State, etc...</p>
+</Appear>
+
+```notes
+Nested context gets reeeallly gnarly really quickly
+Even worse with hooks right now as the dev tools don't support complex state inspection in hooks
+```

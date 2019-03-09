@@ -1,0 +1,15 @@
+{
+  "name": "react-usecontext-hook",
+  "version": "1.0.0",
+  "description": "Presentation for SDJS about useContext() hook",
+  "main": "index.js",
+  "author": "gareth bk",
+  "license": "MIT",
+  "scripts": {
+    "start": "mdx-deck deck.mdx",
+    "build": "mdx-deck build deck.mdx"
+  },
+  "dependencies": {
+    "mdx-deck": "^1.10.0"
+  }
+}
