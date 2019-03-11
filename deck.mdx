@@ -1,5 +1,6 @@
 export { future as theme } from 'mdx-deck/themes';
 import { Appear } from 'mdx-deck';
+import { CodeSurfer } from 'mdx-deck-code-surfer';
 
 ## Better Context with React Hooks
 
@@ -39,75 +40,59 @@ import { Appear } from 'mdx-deck';
 
 ## Context API - Creation & Provider
 
-```jsx
-export const MyContext = React.createContext();
+---
 
-class Parent extends React.Component {
-  // constructor goes here
-  state = {
-    name: 'Fido',
-    hasBall: false,
-  };
-
-  fetch() {
-    this.setState({ hasBall: !this.state.hasBall });
-  }
-
-  render() {
-    const values = { name: this.state.name, hasBall: this.state.hasBall, fetch: this.fetch };
-
-    return (
-      <MyContext.Provider value={values}>
-        <ChildOne />
-      </MyContext.Provider>
-    );
-  }
-}
-```
+<CodeSurfer
+  code={require('!raw-loader!./components/Parent.js')}
+  lang="javascript"
+  showNumbers={true}
+  dark={false}
+  steps={[
+    { range: [1, 4] },
+    { lines: [6] },
+    { range: [8, 22] },
+    { range: [24, 34] },
+    { lines: [25] },
+    { range: [28, 31] },
+  ]}
+/>
 
 ---
 
 ## ChildOne Component
 
-```jsx
-import ChildTwo from './ChildTwo';
+---
 
-const ChildOne = () => (
-  <div style={{ backgroundColor: 'steelblue', padding: '25px', width: '50vw' }}>
-    <ChildTwo />
-  </div>
-);
-```
-
-No props passed to ChildTwo
+<CodeSurfer
+  code={require('!raw-loader!./components/ChildOne.js')}
+  lang="javascript"
+  showNumbers={true}
+  dark={false}
+  steps={[{ range: [1, 12] }, { lines: [7], notes: 'No props passed to ChildTwo' }]}
+/>
 
 ---
 
 ## ChildTwo Component
 
-```jsx
-import { MyContext } from './Parent';
+---
 
-const ChildTwo = () => (
-  <MyContext.Consumer>
-    {value => (
-      <div>
-        <h3>
-          {value.name} {value.hasBall ? 'has' : 'does not have'} the ball.
-        </h3>
-        <button onClick={() => value.fetch()}>Play Fetch</button>
-      </div>
-    )}
-  </MyContext.Consumer>
-);
-```
-
-Render prop to get values from context Provider
+<CodeSurfer
+  code={require('!raw-loader!./components/ChildTwo.js')}
+  lang="javascript"
+  showNumbers={true}
+  dark={false}
+  steps={[
+    { range: [1, 23] },
+    { lines: [3] },
+    { range: [7, 18] },
+    { range: [8, 17], notes: 'Render prop to pass context Provider value prop' },
+  ]}
+/>
 
 ---
 
 import Parent from './components/Parent';
-import ExampleKey from './components/ExampleKey';
 
 <Parent />
 
@@ -123,7 +108,9 @@ import ExampleKey from './components/ExampleKey';
   <p>Redux changes the structure of your app, context doesn't really, both increase complexity</p>
   <p>Redux is more than just global store - Flux architecture, immutability, pure functions, etc</p>
   <p>Redux dev tools are really really good; debugging context with React dev tools is a pain</p>
-  <p><strong>If you just need to make state easily available, context is a good solution</strong></p>
+  <p>
+    <strong>If you just need to make state easily available, context is a good solution</strong>
+  </p>
   <p>Same for MobX, Cerebral, Apollo Link State, etc...</p>
 </Appear>
 
@@ -131,3 +118,37 @@ import ExampleKey from './components/ExampleKey';
 Nested context gets reeeallly gnarly really quickly
 Even worse with hooks right now as the dev tools don't support complex state inspection in hooks
 ```
+
+---
+
+## Render Props are Awesome
+
+<Appear>
+  <h2 className="iWJQFI">And Also Annoying</h2>
+</Appear>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/NestedContext.js')}
+  lang="javascript"
+  showNumbers={true}
+  dark={false}
+  steps={[{ range: [1, 5] }, { range: [7, 21] }, { range: [23, 37] }, { range: [39, 53] }, { range: [55, 83] }]}
+/>
+
+---
+
+import NestedContext from './components/NestedContext';
+
+<NestedContext />
+
+---
+
+<img src="./assets/context-lol.png" />
+
+<Appear>
+  <h2 className="iWJQFI">This is insane</h2>
+</Appear>
+
+---
