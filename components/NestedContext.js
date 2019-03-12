@@ -56,27 +56,25 @@ function ContextChild() {
   return (
     <div style={{ backgroundColor: 'firebrick', padding: '25px' }}>
       <ContextOne.Consumer>
-        {value => {
-          return (
-            <div>
-              <p>{value}</p>
-              <ContextTwo.Consumer>
-                {value => (
-                  <div>
-                    <p>{value}</p>
-                    <ContextThree.Consumer>
-                      {value => (
-                        <div>
-                          <p>{value}</p>
-                        </div>
-                      )}
-                    </ContextThree.Consumer>
-                  </div>
-                )}
-              </ContextTwo.Consumer>
-            </div>
-          );
-        }}
+        {value => (
+          <div>
+            <p>{value}</p>
+            <ContextTwo.Consumer>
+              {value => (
+                <div>
+                  <p>{value}</p>
+                  <ContextThree.Consumer>
+                    {value => (
+                      <div>
+                        <p>{value}</p>
+                      </div>
+                    )}
+                  </ContextThree.Consumer>
+                </div>
+              )}
+            </ContextTwo.Consumer>
+          </div>
+        )}
       </ContextOne.Consumer>
     </div>
   );

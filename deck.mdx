@@ -1,6 +1,7 @@
 export { future as theme } from 'mdx-deck/themes';
 import { Appear } from 'mdx-deck';
 import { CodeSurfer } from 'mdx-deck-code-surfer';
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
 
 ## Better Context with React Hooks
 
@@ -46,8 +47,9 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
   code={require('!raw-loader!./components/Parent.js')}
   lang="javascript"
   showNumbers={true}
-  dark={false}
+  theme={nightOwl}
   steps={[
+    { range: [1, 37] },
     { range: [1, 4] },
     { lines: [6] },
     { range: [8, 22] },
@@ -67,7 +69,7 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
   code={require('!raw-loader!./components/ChildOne.js')}
   lang="javascript"
   showNumbers={true}
-  dark={false}
+  theme={nightOwl}
   steps={[{ range: [1, 12] }, { lines: [7], notes: 'No props passed to ChildTwo' }]}
 />
 
@@ -81,7 +83,7 @@ import { CodeSurfer } from 'mdx-deck-code-surfer';
   code={require('!raw-loader!./components/ChildTwo.js')}
   lang="javascript"
   showNumbers={true}
-  dark={false}
+  theme={nightOwl}
   steps={[
     { range: [1, 23] },
     { lines: [3] },
@@ -127,14 +129,29 @@ Even worse with hooks right now as the dev tools don't support complex state ins
   <h2 className="iWJQFI">And Also Annoying</h2>
 </Appear>
 
+```notes
+Render props allow reusable component logic and good design patterns
+They just get really complex really quickly
+```
+
 ---
 
 <CodeSurfer
   code={require('!raw-loader!./components/NestedContext.js')}
   lang="javascript"
   showNumbers={true}
-  dark={false}
-  steps={[{ range: [1, 5] }, { range: [7, 21] }, { range: [23, 37] }, { range: [39, 53] }, { range: [55, 83] }]}
+  theme={nightOwl}
+  steps={[
+    { range: [1, 85] },
+    { range: [1, 5] },
+    { range: [7, 21] },
+    { range: [23, 37] },
+    { range: [39, 53] },
+    { range: [55, 81] },
+    { lines: [58, 59, 60, 61, 76, 77, 78] },
+    { lines: [62, 63, 64, 65, 73, 74, 75] },
+    { range: [66, 72] },
+  ]}
 />
 
 ---
@@ -152,3 +169,171 @@ import NestedContext from './components/NestedContext';
 </Appear>
 
 ---
+
+## Hello Hooks
+
+<Appear>
+  <p>Hooks "let you use state and other React features without writing a class" (React Docs)</p>
+  <p>A way to re-use/share stateful logic between components</p>
+  <p>Functional components have access to everything class components do (state, lifecycle)</p>
+  <p>Released in February 2019 with React 16.7</p>
+</Appear>
+
+---
+
+## useContext
+
+<Appear>
+  <p>
+    A hook that accepts one argument - a value returned from <code>React.createContext()</code>
+  </p>
+  <p>Immediate access to the context object passed in (no consumer component needed)</p>
+  <p>Unlike other hooks, doesn't really add new features, just makes context a lot nicer</p>
+</Appear>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/usecontext/HookProvider.js')}
+  lang="javascript"
+  showNumbers={true}
+  theme={nightOwl}
+  steps={[
+    { range: [1, 35] },
+    { range: [1, 3] },
+    { range: [5, 7] },
+    { range: [9, 13] },
+    { range: [15, 24] },
+    { range: [26, 32] },
+    { lines: [29] },
+  ]}
+/>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/usecontext/HookContainer.js')}
+  lang="javascript"
+  showNumbers={true}
+  theme={nightOwl}
+  steps={[{ range: [1, 14] }, { range: [1, 4] }, { range: [6, 12] }]}
+/>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/usecontext/HookFirstChild.js')}
+  lang="javascript"
+  showNumbers={true}
+  theme={nightOwl}
+/>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/usecontext/HookSecondChild.js')}
+  lang="javascript"
+  showNumbers={true}
+  theme={nightOwl}
+  steps={[
+    { range: [1, 27] },
+    { range: [1, 3] },
+    { range: [5, 6] },
+    { lines: [6] },
+    { range: [8, 24] },
+    { lines: [11] },
+    { range: [13, 22] },
+    { lines: [16, 21] },
+  ]}
+/>
+
+---
+
+import HookContainer from './components/usecontext/HookContainer';
+
+<HookContainer />
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/NestedContext.js')}
+  lang="javascript"
+  showNumbers={true}
+  theme={nightOwl}
+  steps={[{ range: [1, 84] }, { range: [55, 81] }]}
+/>
+
+---
+
+<CodeSurfer
+  code={require('!raw-loader!./components/usecontext/NestedHookContext.js')}
+  lang="javascript"
+  showNumbers={true}
+  theme={nightOwl}
+  steps={[
+    { range: [1, 61] },
+    { range: [1, 5] },
+    { range: [7, 17] },
+    { range: [19, 33] },
+    { range: [35, 45] },
+    { range: [47, 59] },
+  ]}
+/>
+
+---
+
+import NestedHookContext from './components/usecontext/NestedHookContext';
+
+<NestedHookContext />
+
+---
+
+<img src="./assets/render-props-vs-hooks.png" />
+
+```notes
+almost 30 lines of code vs 12, if you care about that sort of thing
+```
+
+---
+
+## Destructuring Context
+
+<Appear>
+  <p>
+    Value from <code>createContext()</code> can be destructured with render props, but <strong>not with hooks</strong>.
+  </p>
+  <p>
+    <code>const {`{ Consumer, Provider }`} = createContext()</code>
+  </p>
+  <h1>:(</h1>
+  <p>
+    <code>const MyCoolContext = createContext()</code>
+  </p>
+  <h1>:)</h1>
+</Appear>
+
+---
+
+## Conclusions
+
+<Appear>
+  <p>Hooks are awesome</p>
+  <p>
+    (write whole apps with no <em>this</em>!)
+  </p>
+  <p>
+    <code>useContext()</code> makes code more readable
+  </p>
+  <p>Try context if you haven't</p>
+  <p>(especially if you reach for Redux, MobX, whatever a lot)</p>
+</Appear>
+
+---
+
+## Thank you
+
+<p>https://better-context-with-hooks.netlify.com</p>
+
+<p>https://github.com/garethpbk/better-context-with-hooks</p>
+
+<p>@garethpbk on github, @garethbk everywhere else</p>
